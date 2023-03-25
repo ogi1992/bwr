@@ -19,4 +19,8 @@ public class ExceptionSuppliers {
       .httpStatus(HttpStatus.NOT_FOUND)
       .message("No existing user found for given ID!")
       .build();
+
+  public static final Supplier<ScheduleJobException> scheduleJobException = () -> ScheduleJobException.builder()
+      .message("Exception occurred while scheduling a job")
+      .build();
 }
