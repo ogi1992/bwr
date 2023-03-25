@@ -1,0 +1,15 @@
+server:
+  port: 8082
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic-name: bwr-topic
+  group-id: bwr-group-id
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bwr
+    username: root
+    password:
+
+robot-id: 1

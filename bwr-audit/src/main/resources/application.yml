@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bwr
+    username: root
+    password:
+
+kafka:
+  bootstrap-servers: localhost:9200
+  topic-name: audit-log
+  group-id: audit-log-group-id

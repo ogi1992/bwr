@@ -1,0 +1,22 @@
+package com.example.bwr.producers;
+
+import com.example.bwr.models.Message;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public abstract class Producer {
+
+  private final ObjectMapper objectMapper;
+
+  public abstract void sendMessage(Message message);
+
+  public String convertToString(Message message) {
+    try {
+      return objectMapper.writeValueAsString(message);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException("Can't convert message to String");
+    }
+  }
+}
