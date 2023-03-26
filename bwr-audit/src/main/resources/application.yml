@@ -3,9 +3,18 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bwr
+    url: jdbc:mysql://localhost:3306/
     username: root
-    password:
+    password: Test.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  flyway:
+    table: flyway_schema_history
+    url: jdbc:mysql://localhost:3306/
+    user: root
+    password: Test.123
+    locations: classpath:db/migration
+    schemas: bwr-audit
 
 kafka:
   bootstrap-servers: localhost:9200

@@ -2,6 +2,7 @@ package com.example.bwr.entities;
 
 import com.example.bwr.entities.converters.StatusConverter;
 import com.example.bwr.enums.Status;
+import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "task")
+@Table(catalog = "bwr", name = "task")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +30,7 @@ public class TaskEntity {
 
   private String name;
 
+  @Column(name = "robot_id")
   private Integer robotId;
 
   private String route;

@@ -3,6 +3,21 @@ kafka:
   topic-name: bwr-topic
   group-id: bwr-group-id
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/
+    username: root
+    password: Test.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  flyway:
+    table: flyway_schema_history
+    url: jdbc:mysql://localhost:3306/
+    user: root
+    password: Test.123
+    locations: classpath:db/migration
+    schemas: bwr
+
 quartz:
   properties:
     #============================================================================
@@ -31,10 +46,10 @@ quartz:
     # Configure DataSource
     #============================================================================
     org.quartz.dataSource.quartz.provider: hikaricp
-    org.quartz.dataSource.quartz.driver: software.aws.rds.jdbc.mysql.Driver
+    org.quartz.dataSource.quartz.driver: com.mysql.cj.jdbc.Driver
     org.quartz.dataSource.quartz.URL: jdbc:mysql://localhost:3306/bwr
     org.quartz.dataSource.quartz.user: root
-    org.quartz.dataSource.quartz.password:
+    org.quartz.dataSource.quartz.password: Test.123
 
 
     #============================================================================

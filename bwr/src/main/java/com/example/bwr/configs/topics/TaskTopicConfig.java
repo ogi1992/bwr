@@ -25,7 +25,7 @@ public class TaskTopicConfig {
   }
 
   @Bean
-  public NewTopic topic() {
+  public NewTopic taskTopic() {
     return new NewTopic(topicName, 4, (short) 3);
   }
 }

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "robot")
+@Table(catalog = "bwr", name = "robot")
 public class RobotEntity {
 
   @Id
@@ -24,6 +24,6 @@ public class RobotEntity {
   private String name;
 
   @Convert(converter = RobotStateConverter.class)
-  private RobotState state = RobotState.ON;
+  private RobotState state = RobotState.OFF;
 
 }

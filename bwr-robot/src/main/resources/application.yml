@@ -8,8 +8,9 @@ kafka:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bwr
+    url: jdbc:mysql://localhost:3306/
     username: root
-    password:
+    password: Test.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 robot-id: 1
