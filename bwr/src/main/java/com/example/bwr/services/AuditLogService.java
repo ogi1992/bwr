@@ -1,6 +1,7 @@
 package com.example.bwr.services;
 
-import com.example.bwr.repositories.AuditLogRepository;
+import com.example.bwr.models.AuditLogMessage;
+import com.example.bwr.producers.BWRProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuditLogService {
 
-  private final AuditLogRepository auditLogRepository;
+  private final BWRProducer producer;
 
-  public void logEvent() {
-
+  public void logEvent(AuditLogMessage auditLogMessage) {
+    producer.sendMessage(auditLogMessage);
   }
 
 }

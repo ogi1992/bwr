@@ -2,14 +2,18 @@ package com.example.bwr.services;
 
 import com.example.bwr.entities.RobotEntity;
 import com.example.bwr.entities.TaskEntity;
+import com.example.bwr.enums.ActionType;
 import com.example.bwr.enums.Command;
+import com.example.bwr.enums.UserType;
 import com.example.bwr.enums.MessageType;
 import com.example.bwr.enums.RobotState;
 import com.example.bwr.exceptions.ExceptionSuppliers;
+import com.example.bwr.models.AuditLogMessage;
 import com.example.bwr.models.Task;
 import com.example.bwr.models.TaskMessage;
-import com.example.bwr.producers.TaskProducer;
+import com.example.bwr.producers.BWRProducer;
 import com.example.bwr.repositories.TaskRepository;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +24,10 @@ public class TaskService {
   private final TaskRepository taskRepository;
   private final AuditLogService auditLogService;
   private final ValidationService validationService;
-  private final TaskProducer taskProducer;
+  private final BWRProducer bwrProducer;
   private final RobotService robotService;
 
-  public Task uploadTask(Task task) {
+  public Task uploadTask(Task task, Integer userId) {
     validationService.validateRobotExists(task.getRobotId());
 
     TaskEntity taskEntity = TaskEntity.builder()
@@ -33,11 +37,9 @@ public class TaskService {
         .build();
 
     TaskEntity savedTask = taskRepository.save(taskEntity);
-    task.setId(savedTask.getId());
 
-    auditLogService.logEvent(); // TODO
-
-    return task;
+    logEvent(savedTask.getId(), userId, savedTask.getRobotId(), ActionType.UPLOAD_TASK);
+    return Task.buildTask(savedTask);
   }
 
   public void startCommand(Integer taskId, Integer userId) {
@@ -57,13 +59,16 @@ public class TaskService {
           .type(MessageType.COMMAND)
           .build();
 
-      taskProducer.sendMessage(turnOnRobotMessage);
+      bwrProducer.sendMessage(turnOnRobotMessage);
+
+      logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.TURN_ON_ROBOT);
+    } else {
+      TaskMessage startCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
+          Command.START_COMMAND);
+      bwrProducer.sendMessage(startCommandMessage);
+
+      logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.START_COMMAND);
     }
-
-    TaskMessage startCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
-        Command.START_COMMAND);
-
-    taskProducer.sendMessage(startCommandMessage);
   }
 
   public void stopCommand(Integer taskId, Integer userId) {
@@ -73,7 +78,9 @@ public class TaskService {
     TaskMessage stopCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.STOP_COMMAND);
 
-    taskProducer.sendMessage(stopCommandMessage);
+    bwrProducer.sendMessage(stopCommandMessage);
+
+    logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.STOP_COMMAND);
   }
 
   public void endTask(Integer taskId, Integer userId) {
@@ -83,6 +90,15 @@ public class TaskService {
     TaskMessage endTaskMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.END_TASK);
 
-    taskProducer.sendMessage(endTaskMessage);
+    bwrProducer.sendMessage(endTaskMessage);
+
+    logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.END_TASK);
+  }
+
+  private void logEvent(Integer taskId, Integer userId, Integer robotId, ActionType actionType) {
+    AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), taskId,
+        actionType, userId, UserType.USER, robotId, UserType.ROBOT);
+
+    auditLogService.logEvent(auditLogMessage);
   }
 }

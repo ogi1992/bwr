@@ -1,6 +1,11 @@
 package com.example.bwraudit.entities;
 
+import com.example.bwraudit.entities.converters.ActionTypeConverter;
+import com.example.bwraudit.entities.converters.UserTypeConverter;
+import com.example.bwraudit.enums.ActionType;
+import com.example.bwraudit.enums.UserType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "audit_log")
+@Table(catalog = "bwr-audit", name = "audit_log")
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuditLogEntity {
@@ -32,7 +37,20 @@ public class AuditLogEntity {
     private Integer taskId;
 
     @Column(name = "action_type")
-    private String actionType;
+    @Convert(converter = ActionTypeConverter.class)
+    private ActionType actionType;
 
-    private Integer userId;
+    @Column(name = "source_id")
+    private Integer sourceId;
+
+    @Column(name = "source_type")
+    @Convert(converter = UserTypeConverter.class)
+    private UserType sourceType;
+
+    @Column(name = "target_id")
+    private Integer targetId;
+
+    @Column(name = "target_type")
+    @Convert(converter = UserTypeConverter.class)
+    private UserType targetType;
 }

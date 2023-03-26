@@ -1,5 +1,8 @@
 package com.example.bwraudit.models;
 
+import com.example.bwraudit.enums.ActionType;
+import com.example.bwraudit.enums.UserType;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +13,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuditLogMessage {
+public class AuditLogMessage implements Serializable {
 
   private LocalDateTime dateTime;
   private Integer taskId;
-  private String actionType;
-  private Integer userId;
+  private ActionType actionType;
+  private Integer sourceId;
+  private UserType sourceType;
+  private Integer targetId;
+  private UserType targetType;
 }

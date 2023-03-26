@@ -18,5 +18,5 @@ spring:
 
 kafka:
   bootstrap-servers: localhost:9200
-  topic-name: audit-log
-  group-id: audit-log-group-id
+  audit-topic-name: audit-log
+  audit-group-id: audit-log-group-id

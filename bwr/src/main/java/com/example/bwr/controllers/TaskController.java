@@ -18,9 +18,9 @@ public class TaskController {
 
   private final TaskService taskService;
 
-  @PostMapping
-  public ResponseEntity<Task> uploadTask(@Valid @RequestBody Task task) {
-    return ResponseEntity.ok(taskService.uploadTask(task));
+  @PostMapping("/users/{userId}")
+  public ResponseEntity<Task> uploadTask(@Valid @RequestBody Task task, @PathVariable("userId") Integer userId) {
+    return ResponseEntity.ok(taskService.uploadTask(task, userId));
   }
 
   @PostMapping("/{taskId}/users/{userId}/start")

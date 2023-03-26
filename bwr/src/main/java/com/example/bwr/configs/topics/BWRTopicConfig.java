@@ -14,7 +14,7 @@ public class BWRTopicConfig {
 
   @Value(value = "${kafka.bootstrap-servers}")
   private String bootstrapServers;
-  @Value(value = "${kafka.topic-name}")
+  @Value(value = "${kafka.bwr-topic-name}")
   private String topicName;
 
   @Bean

@@ -17,7 +17,10 @@ public class AuditLogService {
         .dateTime(message.getDateTime())
         .taskId(message.getTaskId())
         .actionType(message.getActionType())
-        .userId(message.getUserId())
+        .sourceId(message.getSourceId())
+        .sourceType(message.getSourceType())
+        .targetId(message.getTargetId())
+        .targetType(message.getTargetType())
         .build();
 
     auditLogRepository.save(auditLogEntity);
