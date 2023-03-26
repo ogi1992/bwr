@@ -4,6 +4,7 @@ import com.example.bwr.entities.RobotEntity;
 import com.example.bwr.entities.TaskEntity;
 import com.example.bwr.enums.ActionType;
 import com.example.bwr.enums.Command;
+import com.example.bwr.enums.Status;
 import com.example.bwr.enums.UserType;
 import com.example.bwr.enums.MessageType;
 import com.example.bwr.enums.RobotState;
@@ -34,6 +35,7 @@ public class TaskService {
         .route(task.getRoute())
         .robotId(task.getRobotId())
         .name(task.getName())
+        .status(Status.PENDING)
         .build();
 
     TaskEntity savedTask = taskRepository.save(taskEntity);
