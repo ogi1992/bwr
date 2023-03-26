@@ -4,7 +4,8 @@ server:
 kafka:
   bootstrap-servers: localhost:9092
   topic-name: bwr-topic
-  group-id: bwr-group-id
+  group-id: bwr-robot-group-id
+  concurrency: 3
 
 spring:
   datasource:

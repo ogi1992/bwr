@@ -15,7 +15,7 @@ public class Listener {
   private final ObjectMapper objectMapper;
   private final AuditLogService auditLogService;
 
-  @KafkaListener(topics = "${kafka.bwr-topic-name}", groupId = "${kafka.group-id}", concurrency = "${kafka.concurrency}")
+  @KafkaListener(topics = "${kafka.bwr-topic-name}", groupId = "${kafka.group-id}", concurrency = "${kafka.concurrency}", containerFactory = "kafkaListenerContainerFactory")
   public void listen(String message) {
     AuditLogMessage auditLogMessage = convertToMessage(message);
 
