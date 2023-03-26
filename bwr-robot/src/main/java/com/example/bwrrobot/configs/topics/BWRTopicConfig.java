@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 
 @Configuration
-public class TaskTopicConfig {
+public class BWRTopicConfig {
 
   @Value(value = "${kafka.bootstrap-servers}")
   private String bootstrapServers;
