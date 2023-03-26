@@ -6,7 +6,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 public abstract class Listener {
 
-  @KafkaListener(topics = "${kafka.bwr-topic-name}", groupId = "${kafka.group-id}")
+  @KafkaListener(topics = "${kafka.bwr-topic-name}", groupId = "${kafka.group-id}", concurrency = "${kafka.concurrency}")
   public void listen(String message) {
     Message messageModel = convertToMessage(message);
     if (!accept(messageModel.getType())) {

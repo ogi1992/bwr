@@ -1,4 +1,4 @@
-package com.example.bwrrobot.configs.topics;
+package com.example.bwraudit.configs.topics;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class BWRTopicConfig {
 
   @Value(value = "${kafka.bootstrap-servers}")
   private String bootstrapServers;
-  @Value(value = "${kafka.topic-name}")
+  @Value(value = "${kafka.bwr-topic-name}")
   private String topicName;
 
   @Bean
@@ -25,7 +25,7 @@ public class BWRTopicConfig {
   }
 
   @Bean
-  public NewTopic topic() {
+  public NewTopic taskTopic() {
     return new NewTopic(topicName, 4, (short) 3);
   }
 }

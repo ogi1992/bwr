@@ -34,7 +34,7 @@ public class KeepAliveScheduledService {
           .sourceId(robotId)
           .build();
 
-      keepAliveProducer.sendMessage(keepAliveMessage);
+      keepAliveProducer.sendMessage(keepAliveMessage, robotId);
     }
   }
 }

@@ -10,7 +10,7 @@ public abstract class Producer {
 
   private final ObjectMapper objectMapper;
 
-  public abstract void sendMessage(Message message);
+  public abstract void sendMessage(Message message, Integer robotId);
 
   public String convertToString(Message message) {
     try {

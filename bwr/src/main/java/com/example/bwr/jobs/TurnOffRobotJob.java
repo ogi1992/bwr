@@ -30,6 +30,6 @@ public class TurnOffRobotJob extends QuartzJobBean {
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), null,
         ActionType.TURN_OFF_ROBOT, null, UserType.SERVER, robotId, UserType.ROBOT);
 
-    auditLogService.logEvent(auditLogMessage);
+    auditLogService.logEvent(auditLogMessage, robotId);
   }
 }

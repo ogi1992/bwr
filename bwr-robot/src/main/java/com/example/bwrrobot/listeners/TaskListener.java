@@ -31,7 +31,7 @@ public class TaskListener extends Listener {
     TaskMessage taskMessage = (TaskMessage) message;
 
     TaskMessage receiveMessage = taskMessage.reverseUserType(MessageType.RECEIVED);
-    taskProducer.sendMessage(receiveMessage);
+    taskProducer.sendMessage(receiveMessage, receiveMessage.getSourceId());
   }
 
   public boolean accept(MessageType type) {

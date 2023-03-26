@@ -17,6 +17,7 @@ spring:
     schemas: bwr-audit
 
 kafka:
-  bootstrap-servers: localhost:9200
-  audit-topic-name: audit-log
-  audit-group-id: audit-log-group-id
+  bootstrap-servers: localhost:9092
+  bwr-topic-name: bwr-topic
+  group-id: bwr-group-id
+  concurrency: 3

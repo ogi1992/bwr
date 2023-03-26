@@ -30,7 +30,7 @@ public class KeepAliveListener extends Listener {
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), null,
         ActionType.KEEP_ALIVE, keepAliveMessage.getSourceId(), UserType.ROBOT, null, null);
 
-    auditLogService.logEvent(auditLogMessage);
+    auditLogService.logEvent(auditLogMessage, keepAliveMessage.getSourceId());
   }
 
   public boolean accept(MessageType type) {

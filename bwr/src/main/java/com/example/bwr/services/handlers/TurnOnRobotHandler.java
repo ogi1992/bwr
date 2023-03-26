@@ -34,7 +34,7 @@ public class TurnOnRobotHandler implements Handler {
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), message.getId(),
         ActionType.TURN_ON_ROBOT, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
 
-    auditLogService.logEvent(auditLogMessage);
+    auditLogService.logEvent(auditLogMessage, message.getSourceId());
 
     // now that robot is in state ON, we can proceed with starting the command
     taskService.startCommand(message.getId(), message.getTargetId());

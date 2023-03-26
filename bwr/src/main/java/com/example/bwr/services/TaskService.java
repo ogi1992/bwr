@@ -59,13 +59,13 @@ public class TaskService {
           .type(MessageType.COMMAND)
           .build();
 
-      bwrProducer.sendMessage(turnOnRobotMessage);
+      bwrProducer.sendMessage(turnOnRobotMessage, taskEntity.getRobotId());
 
       logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.TURN_ON_ROBOT);
     } else {
       TaskMessage startCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
           Command.START_COMMAND);
-      bwrProducer.sendMessage(startCommandMessage);
+      bwrProducer.sendMessage(startCommandMessage, taskEntity.getRobotId());
 
       logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.START_COMMAND);
     }
@@ -78,7 +78,7 @@ public class TaskService {
     TaskMessage stopCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.STOP_COMMAND);
 
-    bwrProducer.sendMessage(stopCommandMessage);
+    bwrProducer.sendMessage(stopCommandMessage, taskEntity.getRobotId());
 
     logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.STOP_COMMAND);
   }
@@ -90,7 +90,7 @@ public class TaskService {
     TaskMessage endTaskMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.END_TASK);
 
-    bwrProducer.sendMessage(endTaskMessage);
+    bwrProducer.sendMessage(endTaskMessage, taskEntity.getRobotId());
 
     logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.END_TASK);
   }
@@ -99,6 +99,6 @@ public class TaskService {
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), taskId,
         actionType, userId, UserType.USER, robotId, UserType.ROBOT);
 
-    auditLogService.logEvent(auditLogMessage);
+    auditLogService.logEvent(auditLogMessage, robotId);
   }
 }

@@ -11,8 +11,8 @@ public class AuditLogService {
 
   private final BWRProducer producer;
 
-  public void logEvent(AuditLogMessage auditLogMessage) {
-    producer.sendMessage(auditLogMessage);
+  public void logEvent(AuditLogMessage auditLogMessage, Integer robotId) {
+    producer.sendMessage(auditLogMessage, robotId);
   }
 
 }

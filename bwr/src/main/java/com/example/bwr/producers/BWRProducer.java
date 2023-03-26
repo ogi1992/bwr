@@ -2,6 +2,7 @@ package com.example.bwr.producers;
 
 import com.example.bwr.models.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,8 @@ public class BWRProducer extends Producer {
   }
 
   @Override
-  public void sendMessage(Message message) {
-    kafkaTemplate.send(topicName, convertToString(message));
+  public void sendMessage(Message message, Integer robotId) {
+    String partitionKey = String.valueOf(Objects.hash(robotId));
+    kafkaTemplate.send(topicName, partitionKey, convertToString(message));
   }
 }

@@ -32,7 +32,7 @@ public class StartCommandHandler implements Handler {
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), message.getId(),
         ActionType.START_COMMAND, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
 
-    auditLogService.logEvent(auditLogMessage);
+    auditLogService.logEvent(auditLogMessage, message.getSourceId());
   }
 
   @Override
