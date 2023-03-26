@@ -45,7 +45,7 @@ public class ValidationService {
     if (!possibleCommands.contains(command)) {
       throw ValidationException.builder()
           .httpStatus(HttpStatus.BAD_REQUEST)
-          .message("Can't execute :" + command.name() + " command on task in status: " + currentStatus.name())
+          .message("Can't execute " + command.name() + " command on task in status: " + currentStatus.name())
           .build();
     }
   }

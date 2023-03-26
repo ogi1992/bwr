@@ -27,7 +27,7 @@ public class AuditListener {
     try {
       return objectMapper.readValue(message, AuditLogMessage.class);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException("Can't convert message to TaskMessage");
+      throw new RuntimeException("Can't convert message to AuditLogMessage");
     }
   }
 }

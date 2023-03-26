@@ -30,7 +30,7 @@ public class EndTaskHandler implements Handler {
     taskRepository.save(taskEntity);
 
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), message.getId(),
-        ActionType.END_TASK, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
+        ActionType.END_TASK_ACK, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
 
     auditLogService.logEvent(auditLogMessage, message.getSourceId());
   }

@@ -5,12 +5,14 @@ import com.example.bwr.enums.UserType;
 import com.example.bwr.enums.MessageType;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @SuperBuilder
+@NoArgsConstructor
 public class AuditLogMessage extends Message {
 
   private LocalDateTime dateTime;

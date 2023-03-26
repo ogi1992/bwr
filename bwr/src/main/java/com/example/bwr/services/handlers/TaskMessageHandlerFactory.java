@@ -1,7 +1,6 @@
-package com.example.bwr.services;
+package com.example.bwr.services.handlers;
 
 import com.example.bwr.enums.Command;
-import com.example.bwr.services.handlers.Handler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -9,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskMessageFactory {
+public class TaskMessageHandlerFactory {
 
   private Map<Command, Handler> handlerByCommand;
 
   @Autowired
-  public TaskMessageFactory(Set<Handler> handlers) {
+  public TaskMessageHandlerFactory(Set<Handler> handlers) {
     createStrategy(handlers);
   }
 

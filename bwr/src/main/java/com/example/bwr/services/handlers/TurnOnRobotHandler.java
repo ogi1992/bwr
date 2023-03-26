@@ -32,7 +32,7 @@ public class TurnOnRobotHandler implements Handler {
     robotRepository.save(robotEntity);
 
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), message.getId(),
-        ActionType.TURN_ON_ROBOT, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
+        ActionType.TURN_ON_ROBOT_ACK, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
 
     auditLogService.logEvent(auditLogMessage, message.getSourceId());
 

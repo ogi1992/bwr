@@ -1,7 +1,7 @@
 package com.example.bwr.listeners;
 
 import com.example.bwr.models.TaskMessage;
-import com.example.bwr.services.TaskMessageFactory;
+import com.example.bwr.services.handlers.TaskMessageHandlerFactory;
 import com.example.bwr.services.handlers.Handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 public class AckListener {
 
   private final ObjectMapper objectMapper;
-  private final TaskMessageFactory taskMessageFactory;
+  private final TaskMessageHandlerFactory taskMessageHandlerFactory;
 
   @KafkaListener(topics = "${kafka.ack.topic-name}", groupId = "${kafka.ack.group-id}", concurrency = "${kafka.concurrency}",
       containerFactory = "kafkaListenerContainerFactory")
   public void listen(String message) {
     TaskMessage messageModel = convertToMessage(message);
 
-    Handler handler = taskMessageFactory.getHandler(messageModel.getCommand());
+    Handler handler = taskMessageHandlerFactory.getHandler(messageModel.getCommand());
     handler.handle(messageModel);
   }
 

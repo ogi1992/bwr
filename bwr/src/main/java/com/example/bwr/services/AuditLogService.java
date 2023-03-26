@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuditLogService {
 
-  private final AuditLogProducer producer;
+  private final AuditLogProducer auditLogProducer;
 
   public void logEvent(AuditLogMessage auditLogMessage, Integer robotId) {
-    producer.sendMessage(auditLogMessage, robotId);
+    auditLogProducer.sendMessage(auditLogMessage, robotId);
   }
 
 }

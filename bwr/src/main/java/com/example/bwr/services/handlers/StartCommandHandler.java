@@ -30,7 +30,7 @@ public class StartCommandHandler implements Handler {
     taskRepository.save(taskEntity);
 
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), message.getId(),
-        ActionType.START_COMMAND, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
+        ActionType.START_COMMAND_ACK, message.getSourceId(), UserType.ROBOT, message.getTargetId(), UserType.USER);
 
     auditLogService.logEvent(auditLogMessage, message.getSourceId());
   }
