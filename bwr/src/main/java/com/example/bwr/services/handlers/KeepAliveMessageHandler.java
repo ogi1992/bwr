@@ -43,26 +43,24 @@ public class KeepAliveMessageHandler {
         .withIdentity(jobIdentity, jobGroup)
         .build();
 
+    Date startDateTime = Date.from(LocalDateTime.now().plusSeconds(10L).atZone(ZoneId.systemDefault()).toInstant());
     try {
       if (!scheduler.checkExists(job.getKey())) {
         job = jobScheduleCreator.createJob(TurnOffRobotJob.class, false, applicationContext,
             jobIdentity, jobGroup, keepAliveMessage.getSourceId());
 
-        Date startDateTime = Date.from(LocalDateTime.now().plusSeconds(10L).atZone(ZoneId.systemDefault()).toInstant());
         Trigger trigger = jobScheduleCreator.createSimpleTrigger(jobIdentity, startDateTime,
             SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
 
         scheduler.scheduleJob(job, trigger);
+        log.info(">>>>> jobName = [" + jobIdentity + "]" + " created and scheduled.");
       } else {
-        Date startDateTime = Date.from(LocalDateTime.now().plusSeconds(10L).atZone(ZoneId.systemDefault()).toInstant());
 
-        Trigger newTrigger = jobScheduleCreator.createSimpleTrigger(
-            jobIdentity,
-            startDateTime,
+        Trigger trigger = jobScheduleCreator.createSimpleTrigger(jobIdentity, startDateTime,
             SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
 
-        schedulerFactoryBean.getScheduler().rescheduleJob(TriggerKey.triggerKey(jobIdentity), newTrigger);
-        log.info(">>>>> jobName = [" + jobIdentity + "]" + " updated and scheduled.");
+        schedulerFactoryBean.getScheduler().rescheduleJob(TriggerKey.triggerKey(jobIdentity), trigger);
+        log.info(">>>>> jobName = [" + jobIdentity + "]" + " updated and rescheduled.");
       }
     } catch (SchedulerException e) {
       log.error("Reschedule job failed!", e);

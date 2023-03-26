@@ -7,18 +7,21 @@ import com.example.bwr.models.AuditLogMessage;
 import com.example.bwr.services.AuditLogService;
 import com.example.bwr.services.RobotService;
 import java.time.LocalDateTime;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+@Slf4j
 public class TurnOffRobotJob extends QuartzJobBean {
 
-  private final RobotService robotService;
-  private final AuditLogService auditLogService;
+  @Autowired
+  private RobotService robotService;
+  @Autowired
+  private AuditLogService auditLogService;
 
   @Override
   protected void executeInternal(JobExecutionContext context) {
@@ -31,5 +34,6 @@ public class TurnOffRobotJob extends QuartzJobBean {
         ActionType.TURN_OFF_ROBOT, null, UserType.SERVER, robotId, UserType.ROBOT);
 
     auditLogService.logEvent(auditLogMessage, robotId);
+    log.info(">>>>> jobName = [" + context.getJobDetail().getKey().getName() + "]" + " DONE.");
   }
 }
