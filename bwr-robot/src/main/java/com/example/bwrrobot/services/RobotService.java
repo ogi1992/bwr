@@ -15,10 +15,10 @@ public class RobotService {
 
   private final RobotRepository robotRepository;
 
-  public void executeCommand(Integer robotId, Command command) {
+  public void executeCommand(Integer robotId, Command command, Integer taskId) {
     RobotEntity robotEntity = robotRepository.findById(robotId)
         .orElseThrow(ExceptionSuppliers.robotNotFound);
 
-    log.info("Robot : " + robotEntity.getName() + "executed command: " + command);
+    log.info("Robot : " + robotEntity.getName() + " executed command: " + command + " of task with id: " + taskId);
   }
 }

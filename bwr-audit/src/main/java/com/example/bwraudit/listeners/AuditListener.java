@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class Listener {
+public class AuditListener {
 
   private final ObjectMapper objectMapper;
   private final AuditLogService auditLogService;
 
-  @KafkaListener(topics = "${kafka.bwr-topic-name}", groupId = "${kafka.group-id}", concurrency = "${kafka.concurrency}", containerFactory = "kafkaListenerContainerFactory")
+  @KafkaListener(topics = "${kafka.audit.topic-name}", groupId = "${kafka.audit.group-id}", concurrency = "${kafka.concurrency}",
+      containerFactory = "kafkaListenerContainerFactory")
   public void listen(String message) {
     AuditLogMessage auditLogMessage = convertToMessage(message);
 

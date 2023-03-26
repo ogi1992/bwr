@@ -1,7 +1,7 @@
 package com.example.bwr.services;
 
 import com.example.bwr.models.AuditLogMessage;
-import com.example.bwr.producers.BWRProducer;
+import com.example.bwr.producers.AuditLogProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuditLogService {
 
-  private final BWRProducer producer;
+  private final AuditLogProducer producer;
 
   public void logEvent(AuditLogMessage auditLogMessage, Integer robotId) {
     producer.sendMessage(auditLogMessage, robotId);

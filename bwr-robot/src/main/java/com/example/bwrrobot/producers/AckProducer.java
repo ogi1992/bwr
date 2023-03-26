@@ -8,14 +8,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskProducer extends Producer {
+public class AckProducer extends Producer {
 
-  @Value("${kafka.topic-name}")
+  @Value("${kafka.ack.topic-name}")
   private String topicName;
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
-  public TaskProducer(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
+  public AckProducer(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
     super(objectMapper);
     this.kafkaTemplate = kafkaTemplate;
   }

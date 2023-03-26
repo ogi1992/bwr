@@ -1,4 +1,4 @@
-package com.example.bwrrobot.configs.topics;
+package com.example.bwr.configs.topics;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 
 @Configuration
-public class BWRTopicConfig {
+public class TaskTopicConfig {
 
   @Value(value = "${kafka.bootstrap-servers}")
   private String bootstrapServers;
-  @Value(value = "${kafka.topic-name}")
+  @Value(value = "${kafka.task.topic-name}")
   private String topicName;
 
   @Bean
@@ -25,7 +25,7 @@ public class BWRTopicConfig {
   }
 
   @Bean
-  public NewTopic topic() {
+  public NewTopic taskTopic() {
     return new NewTopic(topicName, 4, (short) 3);
   }
 }

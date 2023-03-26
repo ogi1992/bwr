@@ -3,8 +3,13 @@ server:
 
 kafka:
   bootstrap-servers: localhost:9092
-  topic-name: bwr-topic
-  group-id: bwr-robot-group-id
+  task:
+    topic-name: task-topic
+    group-id: bwr-robot-task-group-id
+  ack:
+    topic-name: ack-topic
+  keep-alive:
+    topic-name: keep-alive-topic
   concurrency: 3
 
 spring:

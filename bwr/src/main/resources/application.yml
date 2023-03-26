@@ -1,7 +1,15 @@
 kafka:
   bootstrap-servers: localhost:9092
-  bwr-topic-name: bwr-topic
-  group-id: bwr-group-id
+  task:
+    topic-name: task-topic
+  ack:
+    topic-name: ack-topic
+    group-id: bwr-ack-group-id
+  audit:
+    topic-name: audit-topic
+  keep-alive:
+    topic-name: keep-alive-topic
+    group-id: bwr-keep-alive-group-id
   concurrency: 3
 
 spring:

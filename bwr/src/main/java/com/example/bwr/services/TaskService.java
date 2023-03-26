@@ -12,7 +12,7 @@ import com.example.bwr.exceptions.ExceptionSuppliers;
 import com.example.bwr.models.AuditLogMessage;
 import com.example.bwr.models.Task;
 import com.example.bwr.models.TaskMessage;
-import com.example.bwr.producers.BWRProducer;
+import com.example.bwr.producers.TaskProducer;
 import com.example.bwr.repositories.TaskRepository;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class TaskService {
   private final TaskRepository taskRepository;
   private final AuditLogService auditLogService;
   private final ValidationService validationService;
-  private final BWRProducer bwrProducer;
+  private final TaskProducer taskProducer;
   private final RobotService robotService;
 
   public Task uploadTask(Task task, Integer userId) {
@@ -61,13 +61,13 @@ public class TaskService {
           .type(MessageType.COMMAND)
           .build();
 
-      bwrProducer.sendMessage(turnOnRobotMessage, taskEntity.getRobotId());
+      taskProducer.sendMessage(turnOnRobotMessage, taskEntity.getRobotId());
 
       logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.TURN_ON_ROBOT);
     } else {
       TaskMessage startCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
           Command.START_COMMAND);
-      bwrProducer.sendMessage(startCommandMessage, taskEntity.getRobotId());
+      taskProducer.sendMessage(startCommandMessage, taskEntity.getRobotId());
 
       logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.START_COMMAND);
     }
@@ -80,7 +80,7 @@ public class TaskService {
     TaskMessage stopCommandMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.STOP_COMMAND);
 
-    bwrProducer.sendMessage(stopCommandMessage, taskEntity.getRobotId());
+    taskProducer.sendMessage(stopCommandMessage, taskEntity.getRobotId());
 
     logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.STOP_COMMAND);
   }
@@ -92,7 +92,7 @@ public class TaskService {
     TaskMessage endTaskMessage = TaskMessage.buildTaskMessage(taskId, userId, taskEntity.getRobotId(),
         Command.END_TASK);
 
-    bwrProducer.sendMessage(endTaskMessage, taskEntity.getRobotId());
+    taskProducer.sendMessage(endTaskMessage, taskEntity.getRobotId());
 
     logEvent(taskId, userId, taskEntity.getRobotId(), ActionType.END_TASK);
   }
