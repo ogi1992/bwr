@@ -2,6 +2,7 @@ App for managing tasks and their statuses, alongside robot states.
 
 `bwr` and `bwr-audit` apps have Flyway migration tool which creates necessary tables upon start.
 Important thing to mention is that before starting all apps, you should change application.yml to match your local DB config.
+Scripts are inserting a test robot and test user with `id: 1`. `bwr-robot` app has that id set in the application.yml file as a property value.
 
 There are 4 endpoints:
 1. Upload task

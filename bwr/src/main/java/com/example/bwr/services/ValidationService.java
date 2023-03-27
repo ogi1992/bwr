@@ -39,7 +39,7 @@ public class ValidationService {
     }
   }
 
-  public void validateTaskStatus(Status currentStatus, Command command) {
+  void validateTaskStatus(Status currentStatus, Command command) {
     List<Command> possibleCommands = currentStatus.getPossibleCommands();
 
     if (!possibleCommands.contains(command)) {
