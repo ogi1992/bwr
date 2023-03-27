@@ -73,7 +73,7 @@ public class KeepAliveMessageHandler {
     return keepAliveMessage.getSourceId() + "-" + TurnOffRobotJob.class.getSimpleName();
   }
 
-  public String getJobGroup(KeepAliveMessage keepAliveMessage) {
+  private String getJobGroup(KeepAliveMessage keepAliveMessage) {
     return keepAliveMessage.getSourceId() + "-" + TurnOffRobotJob.class.getSimpleName() + "-group";
   }
 }
