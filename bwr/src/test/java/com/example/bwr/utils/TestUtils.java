@@ -3,6 +3,8 @@ package com.example.bwr.utils;
 import com.example.bwr.entities.RobotEntity;
 import com.example.bwr.entities.TaskEntity;
 import com.example.bwr.enums.RobotState;
+import com.example.bwr.enums.Status;
+import com.example.bwr.models.Task;
 import com.example.bwr.models.TaskMessage;
 
 public class TestUtils {
@@ -22,8 +24,23 @@ public class TestUtils {
         .build();
   }
 
-  public static RobotEntity buildRobotEntity() {
-    return new RobotEntity(ROBOT_ID, "test", RobotState.OFF);
+  public static TaskEntity buildTaskEntity(Status status) {
+    return TaskEntity.builder()
+        .id(TASK_ID)
+        .robotId(ROBOT_ID)
+        .status(status)
+        .build();
   }
 
+  public static RobotEntity buildRobotEntity(RobotState robotState) {
+    return new RobotEntity(ROBOT_ID, "test", robotState);
+  }
+
+  public static Task buildTask() {
+    return Task.builder()
+        .name("test task")
+        .route("test route")
+        .robotId(ROBOT_ID)
+        .build();
+  }
 }

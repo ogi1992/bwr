@@ -6,18 +6,23 @@ import static com.example.bwr.utils.TestUtils.USER_ID;
 import static com.example.bwr.utils.TestUtils.buildTaskEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.bwr.enums.ActionType;
 import com.example.bwr.enums.Command;
 import com.example.bwr.exceptions.ValidationException;
+import com.example.bwr.models.AuditLogMessage;
 import com.example.bwr.models.TaskMessage;
 import com.example.bwr.repositories.TaskRepository;
 import com.example.bwr.services.AuditLogService;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,6 +38,9 @@ class StartCommandHandlerTest {
   @Mock
   private AuditLogService auditLogService;
 
+  @Captor
+  ArgumentCaptor<AuditLogMessage> auditLogMessageArgumentCaptor;
+
   @Test
   void handle() {
     TaskMessage taskMessage = TaskMessage.buildTaskMessage(TASK_ID, USER_ID, ROBOT_ID, Command.END_TASK);
@@ -42,7 +50,10 @@ class StartCommandHandlerTest {
     startCommandHandler.handle(taskMessage);
 
     verify(taskRepository, times(1)).save(any());
-    verify(auditLogService, times(1)).logEvent(any(), any());
+    verify(auditLogService, times(1)).logEvent(auditLogMessageArgumentCaptor.capture(), eq(ROBOT_ID));
+
+    AuditLogMessage auditLogMessage = auditLogMessageArgumentCaptor.getValue();
+    assertEquals(ActionType.START_COMMAND_ACK, auditLogMessage.getActionType());
   }
 
   @Test
