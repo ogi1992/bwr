@@ -29,7 +29,7 @@ public class KeepAliveListener {
     keepAliveMessageHandler.handle(messageModel);
 
     AuditLogMessage auditLogMessage = AuditLogMessage.buildAuditLogMessage(LocalDateTime.now(), null,
-        ActionType.KEEP_ALIVE, messageModel.getSourceId(), UserType.ROBOT, null, null);
+        ActionType.KEEP_ALIVE, messageModel.getSourceId(), UserType.ROBOT, null, UserType.SERVER);
 
     auditLogService.logEvent(auditLogMessage, messageModel.getSourceId());
   }
